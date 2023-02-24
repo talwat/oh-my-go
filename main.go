@@ -24,8 +24,8 @@ func main() {
 	case "version":
 		log.Log("oh-my-go version %s", global.Version)
 	case "prompt":
-		if len(args) < 4 {
-			log.RawError("not enough parameters, need shell, exit code, and pwd")
+		if len(args) < 3 {
+			log.RawError("not enough parameters, need shell and pwd")
 		}
 
 		global.Shell = args[1]
@@ -35,8 +35,13 @@ func main() {
 			log.RawError("invalid shell: %s", global.Shell)
 		}
 
-		exit = args[2]
-		pwd = args[3]
+		pwd = args[2]
+
+		if len(args) < 4 {
+			exit = "0"
+		} else {
+			exit = args[3]
+		}
 
 		log.OutputLog(prompt.GetPrompt(exit, pwd))
 	}
