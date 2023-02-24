@@ -6,7 +6,6 @@ import (
 	"path"
 	"strings"
 
-	"github.com/talwat/oh-my-go/internal/global"
 	"github.com/talwat/oh-my-go/internal/log"
 	"github.com/talwat/oh-my-go/internal/log/color"
 	"github.com/talwat/oh-my-go/internal/prompt/plugins"
@@ -42,24 +41,16 @@ func plugin(segments *[]string, plugin func() plugins.PluginOutput) {
 	))
 }
 
-func GetPWD() string {
-	pwd := ""
-
-	if global.Shell == "cmd" {
-		pwd = os.Getenv("cd")
-	} else {
-		pwd = os.Getenv("PWD")
-	}
-
+func FormatPWD(raw string) string {
 	home, err := os.UserHomeDir()
 	log.Error(err, "an error occurred while getting user home directory")
 
-	pwd = strings.ReplaceAll(pwd, home, "~")
+	pwd := strings.ReplaceAll(raw, home, "~")
 
 	return pwd
 }
 
-func GetPrompt(exit string) string {
+func GetPrompt(exit string, pwd string) string {
 	segments := []string{}
 
 	// Segments
@@ -69,7 +60,7 @@ func GetPrompt(exit string) string {
 		segment(&segments, "➜ ", color.Red)
 	}
 
-	segment(&segments, path.Base(GetPWD()), color.Cyan)
+	segment(&segments, path.Base(FormatPWD(pwd)), color.Cyan)
 
 	// Plugins
 	plugin(&segments, git.Plugin)

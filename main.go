@@ -16,6 +16,7 @@ func main() {
 		log.RawError("you must specify a command")
 	}
 
+	pwd := ""
 	// Exit is the exit code of $?
 	exit := ""
 
@@ -23,19 +24,20 @@ func main() {
 	case "version":
 		log.Log("oh-my-go version %s", global.Version)
 	case "prompt":
-		if len(args) < 3 {
-			log.RawError("not enough parameters, need shell and exit code")
+		if len(args) < 4 {
+			log.RawError("not enough parameters, need shell, exit code, and pwd")
 		}
 
 		global.Shell = args[1]
-		shells := []string{"sh", "fish", "zsh", "bash", "pwsh", "cmd", "powershell"}
+		shells := []string{"sh", "fish", "zsh", "bash", "cmd", "powershell"}
 
 		if !utils.Contains(shells, global.Shell) {
 			log.RawError("invalid shell: %s", global.Shell)
 		}
 
 		exit = args[2]
+		pwd = args[3]
 
-		log.OutputLog(prompt.GetPrompt(exit))
+		log.OutputLog(prompt.GetPrompt(exit, pwd))
 	}
 }
