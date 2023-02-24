@@ -1,9 +1,12 @@
 PREFIX = $(HOME)/.local
 
-all:
-	go build .
+build:
+	mkdir -vp build
+	go build -o build
 
-install:
-	go build .
+install: build/oh-my-go
 	mkdir -p $(PREFIX)/bin
-	mv -v oh-my-go $(PREFIX)/bin/oh-my-go
+	mv -v build/oh-my-go $(PREFIX)/bin/oh-my-go
+
+clean:
+	rm -rvf build

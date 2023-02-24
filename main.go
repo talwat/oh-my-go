@@ -22,7 +22,7 @@ func main() {
 
 	switch args[0] {
 	case "version":
-		log.Log("oh-my-go version %s", global.Version)
+		log.OutputLog("oh-my-go version %s\n", global.Version)
 	case "prompt":
 		if len(args) < 3 {
 			log.RawError("not enough parameters, need shell and pwd")

@@ -6,12 +6,19 @@ import (
 	"path"
 	"strings"
 
+	"github.com/talwat/oh-my-go/config"
 	"github.com/talwat/oh-my-go/internal/log"
 	"github.com/talwat/oh-my-go/internal/log/color"
-	"github.com/talwat/oh-my-go/internal/prompt/plugins"
 
+	"github.com/talwat/oh-my-go/internal/prompt/plugins"
 	"github.com/talwat/oh-my-go/internal/prompt/plugins/git"
+	"github.com/talwat/oh-my-go/internal/prompt/plugins/node"
 )
+
+var pluginList = map[string]func() plugins.PluginOutput{
+	"git":  git.Plugin,
+	"node": node.Plugin,
+}
 
 func segment(segments *[]string, segmentVal string, segmentColor string) {
 	*segments = append(*segments, fmt.Sprintf(
@@ -22,7 +29,7 @@ func segment(segments *[]string, segmentVal string, segmentColor string) {
 	))
 }
 
-func plugin(segments *[]string, plugin func() plugins.PluginOutput) {
+func loadPlugin(segments *[]string, plugin func() plugins.PluginOutput) {
 	out := plugin()
 
 	if !out.Display {
@@ -38,15 +45,28 @@ func plugin(segments *[]string, plugin func() plugins.PluginOutput) {
 		color.PromptColor(out.NameColor),
 		color.PromptColor(color.Reset),
 	))
+
 }
 
-func FormatPWD(raw string) string {
+func formatPWD(raw string) string {
 	home, err := os.UserHomeDir()
 	log.Error(err, "an error occurred while getting user home directory")
 
 	pwd := strings.ReplaceAll(raw, home, "~")
 
 	return pwd
+}
+
+func loadPlugins(segments *[]string) {
+	for _, name := range config.Plugins {
+		val, ok := pluginList[name]
+
+		if !ok {
+			continue
+		}
+
+		loadPlugin(segments, val)
+	}
 }
 
 func GetPrompt(exit string, pwd string) string {
@@ -59,11 +79,9 @@ func GetPrompt(exit string, pwd string) string {
 		segment(&segments, "➜ ", color.Red)
 	}
 
-	segment(&segments, path.Base(FormatPWD(pwd)), color.Cyan)
+	segment(&segments, path.Base(formatPWD(pwd)), color.Cyan)
 
-	// Plugins
-	plugin(&segments, git.Plugin)
-	//plugin(&segments, node.Plugin)
+	loadPlugins(&segments)
 
 	if git.IsDirty() {
 		segment(&segments, "✗", color.Yellow)
