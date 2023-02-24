@@ -11,7 +11,6 @@ import (
 	"github.com/talwat/oh-my-go/internal/prompt/plugins"
 
 	"github.com/talwat/oh-my-go/internal/prompt/plugins/git"
-	"github.com/talwat/oh-my-go/internal/prompt/plugins/node"
 )
 
 func segment(segments *[]string, segmentVal string, segmentColor string) {
@@ -64,7 +63,7 @@ func GetPrompt(exit string, pwd string) string {
 
 	// Plugins
 	plugin(&segments, git.Plugin)
-	plugin(&segments, node.Plugin)
+	//plugin(&segments, node.Plugin)
 
 	if git.IsDirty() {
 		segment(&segments, "✗", color.Yellow)
