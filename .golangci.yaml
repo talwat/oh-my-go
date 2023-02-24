@@ -1,0 +1,14 @@
+linters:
+  disable:
+    - exhaustivestruct
+    - tagliatelle
+    - exhaustruct
+    - nosnakecase
+    - godox
+    - musttag
+    - gci
+    - ifshort
+    - wrapcheck
+    - gomnd
+
+  enable-all: true
