@@ -47,7 +47,7 @@ func PromptColor(color string) string {
 		closerEnd = "%%}"
 	case "bash":
 		closerStart = "\001"
-		closerEnd = "\001"
+		closerEnd = "\002"
 	}
 
 	return fmt.Sprintf("%s%s%s", closerStart, color, closerEnd)
