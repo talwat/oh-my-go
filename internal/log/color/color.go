@@ -38,8 +38,8 @@ const (
 )
 
 func PromptColor(color string) string {
-	closerStart := "\\["
-	closerEnd := "\\]"
+	closerStart := ""
+	closerEnd := ""
 
 	switch global.Shell {
 	case "zsh":
@@ -48,9 +48,6 @@ func PromptColor(color string) string {
 	case "bash":
 		closerStart = "\\["
 		closerEnd = "\\]"
-	default:
-		closerStart = ""
-		closerEnd = ""
 	}
 
 	return fmt.Sprintf("%s%s%s", closerStart, color, closerEnd)
