@@ -7,17 +7,25 @@ import (
 	"strings"
 
 	"github.com/talwat/oh-my-go/config"
+	"github.com/talwat/oh-my-go/internal/exec"
+	"github.com/talwat/oh-my-go/internal/global"
 	"github.com/talwat/oh-my-go/internal/log"
 	"github.com/talwat/oh-my-go/internal/log/color"
 
 	"github.com/talwat/oh-my-go/internal/prompt/plugins"
 	"github.com/talwat/oh-my-go/internal/prompt/plugins/git"
 	"github.com/talwat/oh-my-go/internal/prompt/plugins/node"
+	"github.com/talwat/oh-my-go/internal/prompt/plugins/python"
+	"github.com/talwat/oh-my-go/internal/prompt/plugins/ruby"
+	"github.com/talwat/oh-my-go/internal/prompt/plugins/rust"
 )
 
 var pluginList = map[string]func() plugins.PluginOutput{
-	"git":  git.Plugin,
-	"node": node.Plugin,
+	"git":    git.Plugin,
+	"node":   node.Plugin,
+	"rust":   rust.Plugin,
+	"python": python.Plugin,
+	"ruby":   ruby.Plugin,
 }
 
 func segment(segments *[]string, segmentVal string, segmentColor string) {
@@ -69,17 +77,31 @@ func loadPlugins(segments *[]string) {
 	}
 }
 
-func GetPrompt(exit string, pwd string) string {
+func showUserHostname(segments *[]string) {
+	hostname, exitcode, err := exec.Run("hostname", "-s")
+
+	if err != nil || exitcode != 0 || hostname == "" {
+		return
+	}
+
+	segment(segments, fmt.Sprintf("(%s@%s)", global.User, hostname), color.White)
+}
+
+func GetPrompt() string {
 	segments := []string{}
 
+	if config.ShowUserHostname {
+		showUserHostname(&segments)
+	}
+
 	// Segments
-	if exit == "0" {
+	if global.ExitCode == "0" {
 		segment(&segments, "➜ ", color.Green)
 	} else {
 		segment(&segments, "➜ ", color.Red)
 	}
 
-	segment(&segments, path.Base(formatPWD(pwd)), color.Cyan)
+	segment(&segments, path.Base(formatPWD(global.PWD)), color.Cyan)
 
 	loadPlugins(&segments)
 

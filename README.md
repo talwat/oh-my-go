@@ -45,13 +45,13 @@ sudo chmod +x ~/.local/bin/oh-my-go
 
 ```sh
 echo 'set -o PROMPT_SUBST' >> .zshrc
-echo 'PS1='"'\$( oh-my-go prompt zsh \$PWD \$? )'" >> ~/.zshrc
+echo 'PS1='"'\$( oh-my-go prompt zsh \$PWD \$USER \$? )'" >> ~/.zshrc
 ```
 
 #### Bash
 
 ```sh
-echo 'PS1='"'\$( oh-my-go prompt bash \$PWD \$? )'" >> ~/.bashrc
+echo 'PS1='"'\$( oh-my-go prompt bash \$PWD \$USER \$? )'" >> ~/.bashrc
 ```
 
 #### Fish
@@ -61,7 +61,7 @@ mkdir -p ~/.config/fish/
 
 echo >> ~/.config/fish/config.fish 'if status is-interactive
     function fish_prompt
-        printf (oh-my-go prompt fish $PWD $status)
+        printf (oh-my-go prompt fish $PWD $USER $status)
     end
 end
 '
@@ -73,7 +73,7 @@ You need to add:
 
 ```powershell
 function prompt {
-    "$(oh-my-go prompt powershell $PWD $LASTEXITCODE)"
+    "$(oh-my-go prompt powershell $PWD $UserName $LASTEXITCODE)"
 }
 ```
 
@@ -86,7 +86,7 @@ I didn't create a specific command because powershell is garbage.
 You should add:
 
 ```sh
-PS1='$( oh-my-go prompt sh $PWD $? )'
+PS1='$( oh-my-go prompt sh $PWD $USER $? )'
 ```
 
 to your shell's rc/profile file.

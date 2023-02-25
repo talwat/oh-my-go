@@ -9,6 +9,14 @@ import (
 	"github.com/talwat/oh-my-go/internal/utils"
 )
 
+func validateShell(shell string) {
+	shells := []string{"sh", "fish", "zsh", "bash", "cmd", "powershell"}
+
+	if !utils.Contains(shells, shell) {
+		log.RawError("invalid shell: %s", global.Shell)
+	}
+}
+
 func main() {
 	args := os.Args[1:]
 
@@ -16,33 +24,24 @@ func main() {
 		log.RawError("you must specify a command")
 	}
 
-	pwd := ""
-	// Exit is the exit code of $?
-	exit := ""
-
 	switch args[0] {
 	case "version":
 		log.OutputLog("oh-my-go version %s\n", global.Version)
 	case "prompt":
 		if len(args) < 3 {
-			log.RawError("not enough parameters, need shell and pwd")
+			log.RawError("not enough parameters, need shell, user, and pwd")
 		}
 
 		global.Shell = args[1]
-		shells := []string{"sh", "fish", "zsh", "bash", "cmd", "powershell"}
+		validateShell(global.Shell)
 
-		if !utils.Contains(shells, global.Shell) {
-			log.RawError("invalid shell: %s", global.Shell)
+		global.PWD = args[2]
+		global.User = args[3]
+
+		if len(args) > 4 {
+			global.ExitCode = args[4]
 		}
 
-		pwd = args[2]
-
-		if len(args) < 4 {
-			exit = "0"
-		} else {
-			exit = args[3]
-		}
-
-		log.OutputLog(prompt.GetPrompt(exit, pwd))
+		log.OutputLog(prompt.GetPrompt())
 	}
 }
