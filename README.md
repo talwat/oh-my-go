@@ -133,7 +133,7 @@ I didn't create a specific command because powershell is garbage.
 You should add:
 
 ```sh
-PS1='$( oh-my-go prompt --shell=sh --pwd=$PWD --user=$USER --exitcode=$? --hostname=$HOST )'
+PS1='$( oh-my-go prompt --shell=sh --pwd=$PWD --user=$USER --exitcode=$? --hostname=$HOSTNAME )'
 ```
 
 to your shell's rc/profile file.
