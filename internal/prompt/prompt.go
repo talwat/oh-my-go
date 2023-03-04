@@ -20,6 +20,7 @@ import (
 	"github.com/talwat/oh-my-go/internal/prompt/plugins/rust"
 )
 
+//nolint:gochecknoglobals
 var pluginList = map[string]func() plugins.PluginOutput{
 	"git":    git.Plugin,
 	"node":   node.Plugin,
@@ -53,7 +54,6 @@ func loadPlugin(segments *[]string, plugin func() plugins.PluginOutput) {
 		color.PromptColor(out.NameColor),
 		color.PromptColor(color.Reset),
 	))
-
 }
 
 func formatPWD(raw string) string {
