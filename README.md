@@ -172,7 +172,7 @@ at the beggining of your prompt which displays your username and hostname.
 export OMGO_SHOW_USER_HOSTNAME=1
 ```
 
-> **Note**: This is an "unofficial" modification to the theme which was not explicitly defined by
+> **Note** This is an "unofficial" modification to the theme which was not explicitly defined by
 > robbyrussell himself.
 
 ## Prompt customization

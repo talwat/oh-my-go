@@ -35,7 +35,7 @@ jobs:
         run: |
           set OMGO_SHOW_USER_HOSTNAME=1
           set OMGO_PLUGINS="git node rust ruby python"
-          ./oh-my-go prompt --shell=cmd --pwd=%cd% --user=%USERNAME% --exitcode=%=ExitCode% --hostname=%COMPUTERNAME%"
+          .\oh-my-go prompt --shell=cmd --pwd=%cd% --user=%USERNAME% --exitcode=%=ExitCode% --hostname=%COMPUTERNAME%"
 
 
   unix:
@@ -58,6 +58,7 @@ jobs:
       - name: "Test on bash"
         shell: bash
         run: |
+          printenv
           export OMGO_SHOW_USER_HOSTNAME=1
           export OMGO_PLUGINS="git node rust ruby python"
           ./oh-my-go prompt --shell=bash --pwd=$PWD --user=$USER --exitcode=$? --hostname=$HOST
@@ -69,6 +70,7 @@ jobs:
       - name: "Test on zsh"
         shell: zsh {0}
         run: |
+          printenv
           export OMGO_SHOW_USER_HOSTNAME=1
           export OMGO_PLUGINS="git node rust ruby python"
           ./oh-my-go prompt --shell=zsh --pwd=$PWD --user=$USER --exitcode=$? --hostname=$HOSTNAME
