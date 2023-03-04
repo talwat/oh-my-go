@@ -81,7 +81,7 @@ jobs:
         run: |
           set -Ux OMGO_SHOW_USER_HOSTNAME 1
           set -Ux OMGO_PLUGINS "git node rust ruby python"
-          ./oh-my-go prompt --shell=fish --pwd=$PWD --user=$USER --exitcode=$status --hostname=$HOST
+          ./oh-my-go prompt --shell=fish --pwd=$PWD --user=$USER --exitcode=$status --hostname=$HOSTNAME
 
 
 
