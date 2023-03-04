@@ -98,7 +98,7 @@ echo 'PS1='"'\$( oh-my-go prompt --shell=zsh --pwd=\$PWD --user=\$USER --exitcod
 #### Bash
 
 ```sh
-echo 'PS1='"'\$( oh-my-go prompt --shell=bash --pwd=\$PWD --user=\$USER --exitcode=\$? --hostname=\$HOST )'" >> ~/.bashrc
+echo 'PS1='"'\$( oh-my-go prompt --shell=bash --pwd=\$PWD --user=\$USER --exitcode=\$? --hostname=\$HOSTNAME )'" >> ~/.bashrc
 ```
 
 #### Fish
@@ -108,7 +108,7 @@ mkdir -p ~/.config/fish/
 
 echo >> ~/.config/fish/config.fish 'if status is-interactive
     function fish_prompt
-        printf (oh-my-go prompt --shell=fish --pwd=\$PWD --user=\$USER --exitcode=\$status --hostname=\$HOST)
+        printf (oh-my-go prompt --shell=fish --pwd=\$PWD --user=\$USER --exitcode=\$status --hostname=\$HOSTNAME)
     end
 end
 '
