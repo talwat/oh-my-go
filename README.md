@@ -15,6 +15,7 @@ Made to replace [oh-my-posh](https://ohmyposh.dev/) because it was too slow and 
     - [Obtaining the binary](#obtaining-the-binary)
       - [Global install (unix)](#global-install-unix)
       - [Local install (unix)](#local-install-unix)
+      - [Local install (windows)](#local-install-windows)
     - [Installing it to your shell](#installing-it-to-your-shell)
       - [ZSH](#zsh)
       - [Bash](#bash)
@@ -69,6 +70,11 @@ sudo mkdir -p ~/.local/bin
 sudo mv oh-my-go* ~/.local/bin/oh-my-gos
 sudo chmod +x ~/.local/bin/oh-my-go
 ```
+
+#### Local install (windows)
+
+To install oh-my-go on windows, move the oh-my-go binary to a place
+where it will not be deleted and rename it to `oh-my-go`.
 
 ### Installing it to your shell
 
@@ -149,7 +155,7 @@ Nope. You're on your own.
 ### Plugins
 
 You can use specific plugins by setting `OMGO_PLUGINS` to a string which has all your plugins
-seperated by spaces. Like so:
+seperated by spaces. Like so on bash:
 
 ```sh
 export OMGO_PLUGINS="git node python"
@@ -167,6 +173,8 @@ export OMGO_PLUGINS="git node python"
 
 If you use a lot of different devices, you can set `OMGO_SHOW_USER_HOSTNAME=1` which will add an extra bit
 at the beggining of your prompt which displays your username and hostname.
+
+Example on bash:
 
 ```sh
 export OMGO_SHOW_USER_HOSTNAME=1
