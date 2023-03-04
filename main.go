@@ -45,7 +45,8 @@ func main() {
 		flag.StringVar(&global.User, "user", "unknown", "")
 		flag.StringVar(&global.ExitCode, "exitcode", "0", "")
 
-		flag.CommandLine.Parse(os.Args[2:])
+		err := flag.CommandLine.Parse(os.Args[2:])
+		log.Error(err, "an error occurred while parsing CLI flags")
 
 		validateShell(global.Shell)
 		global.Hostname = parseHostname(global.Hostname)
