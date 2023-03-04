@@ -6,5 +6,6 @@ var (
 	Shell    = "unknown"
 	PWD      = "unknown"
 	User     = "unknown"
+	Hostname = "unknown"
 	ExitCode = "0"
 )

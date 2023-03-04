@@ -1,0 +1,83 @@
+name: testing
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  windows:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/setup-go@v3
+        with:
+          go-version: "1.20"
+
+      - uses: actions/checkout@v3
+
+      - name: "Build oh-my-go"
+        run: "go build ."
+      
+      - name: "Test on powershell"
+        shell: pwsh
+        run: |
+          $env:OMGO_SHOW_USER_HOSTNAME = 1
+          $env:OMGO_PLUGINS = "git node rust ruby python"
+          ./oh-my-go prompt --shell=powershell --pwd=$PWD --user=$UserName --exitcode=$LASTEXITCODE --hostname=$COMPUTERNAME
+      
+      - name: "Test on CMD"
+        shell: cmd
+        run: |
+          set OMGO_SHOW_USER_HOSTNAME=1
+          set OMGO_PLUGINS="git node rust ruby python"
+          ./oh-my-go prompt --shell=cmd --pwd=%cd% --user=%USERNAME% --exitcode=%=ExitCode% --hostname=%COMPUTERNAME%"
+
+
+  unix:
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest]
+  
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/setup-go@v3
+        with:
+          go-version: "1.20"
+
+      - uses: actions/checkout@v3
+
+      - name: "Build oh-my-go"
+        run: "go build ."
+      
+      - name: "Test on bash"
+        shell: bash
+        run: |
+          export OMGO_SHOW_USER_HOSTNAME=1
+          export OMGO_PLUGINS="git node rust ruby python"
+          ./oh-my-go prompt --shell=bash --pwd=$PWD --user=$USER --exitcode=$? --hostname=$HOST
+      
+      - name: "Test on zsh"
+        shell: zsh {0}
+        run: |
+          export OMGO_SHOW_USER_HOSTNAME=1
+          export OMGO_PLUGINS="git node rust ruby python"
+          ./oh-my-go prompt --shell=zsh --pwd=$PWD --user=$USER --exitcode=$? --hostname=$HOST
+      
+      - name: "Install fish"
+        uses: fish-actions/install-fish@v1.1.0
+      
+      - name: "Test on fish"
+        shell: fish {0}
+        run: |
+          set -Ux OMGO_SHOW_USER_HOSTNAME 1
+          set -Ux OMGO_PLUGINS "git node rust ruby python"
+          ./oh-my-go prompt --shell=fish --pwd=$PWD --user=$USER --exitcode=$status --hostname=$HOST
+
+
+

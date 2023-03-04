@@ -1,7 +1,10 @@
 package main
 
 import (
+	"flag"
 	"os"
+	"runtime"
+	"strings"
 
 	"github.com/talwat/oh-my-go/internal/global"
 	"github.com/talwat/oh-my-go/internal/log"
@@ -17,6 +20,14 @@ func validateShell(shell string) {
 	}
 }
 
+func parseHostname(hostname string) string {
+	if runtime.GOOS == "darwin" {
+		return strings.TrimSuffix(hostname, ".local")
+	}
+
+	return hostname
+}
+
 func main() {
 	args := os.Args[1:]
 
@@ -28,19 +39,16 @@ func main() {
 	case "version":
 		log.OutputLog("oh-my-go version %s\n", global.Version)
 	case "prompt":
-		if len(args) < 3 {
-			log.RawError("not enough parameters, need shell, user, and pwd")
-		}
+		flag.StringVar(&global.Hostname, "hostname", "unknown", "")
+		flag.StringVar(&global.Shell, "shell", "unknown", "")
+		flag.StringVar(&global.PWD, "pwd", "unknown", "")
+		flag.StringVar(&global.User, "user", "unknown", "")
+		flag.StringVar(&global.ExitCode, "exitcode", "0", "")
 
-		global.Shell = args[1]
+		flag.CommandLine.Parse(os.Args[2:])
+
 		validateShell(global.Shell)
-
-		global.PWD = args[2]
-		global.User = args[3]
-
-		if len(args) > 4 {
-			global.ExitCode = args[4]
-		}
+		global.Hostname = parseHostname(global.Hostname)
 
 		log.OutputLog(prompt.GetPrompt())
 	}
