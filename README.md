@@ -120,7 +120,7 @@ You need to add:
 
 ```powershell
 function prompt {
-  "$(\Location\To\oh-my-go prompt --shell=powershell --pwd=$PWD --user=$UserName --exitcode=$LASTEXITCODE) --hostname=$COMPUTERNAME"
+  "$(\Location\To\oh-my-go prompt --shell=powershell --pwd=$PWD --user=$UserName --exitcode=$LASTEXITCODE --hostname=$COMPUTERNAME)"
 }
 ```
 
