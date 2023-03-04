@@ -108,7 +108,7 @@ mkdir -p ~/.config/fish/
 
 echo >> ~/.config/fish/config.fish 'if status is-interactive
     function fish_prompt
-        printf (oh-my-go prompt --shell=fish --pwd=\$PWD --user=\$USER --exitcode=\$status --hostname=\$HOSTNAME)
+        printf (oh-my-go prompt --shell=fish --pwd=\$PWD --user=\$USER --exitcode=\$status --hostname=(prompt_hostname))
     end
 end
 '
