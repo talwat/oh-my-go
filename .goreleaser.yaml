@@ -5,7 +5,7 @@ before:
     - go mod tidy
     - go get -u ./...
 builds:
-  - binary: pap
+  - binary: oh-my-go
     goos:
       - darwin
       - windows
