@@ -54,7 +54,7 @@ Then, move the binary into PATH.
 
 ```sh
 sudo mkdir -p /usr/local/bin
-sudo mv oh-my-go* /usr/local/bin/oh-my-gos
+sudo mv oh-my-go* /usr/local/bin/oh-my-go
 sudo chmod +x /usr/local/bin/oh-my-go
 ```
 
@@ -66,9 +66,9 @@ sudo chmod +x /usr/local/bin/oh-my-go
 > [Here](https://github.com/talwat/pap#local-installation-not-found) there are instructions on how to add it from another one of my projects.
 
 ```sh
-sudo mkdir -p ~/.local/bin
-sudo mv oh-my-go* ~/.local/bin/oh-my-gos
-sudo chmod +x ~/.local/bin/oh-my-go
+mkdir -p ~/.local/bin
+mv oh-my-go* ~/.local/bin/oh-my-go
+chmod +x ~/.local/bin/oh-my-go
 ```
 
 #### Local install (windows)
