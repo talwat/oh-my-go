@@ -172,7 +172,7 @@ export OMGO_PLUGINS="git node python"
 ## Hostname & User
 
 If you use a lot of different devices, you can set `OMGO_SHOW_USER_HOSTNAME=1` which will add an extra bit
-at the beggining of your prompt which displays your username and hostname.
+at the beginning of your prompt which displays your username and hostname.
 
 Example on bash:
 
